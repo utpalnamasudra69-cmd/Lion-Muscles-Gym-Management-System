@@ -31,10 +31,7 @@
       padding: 40px 36px;
       animation: slideUp 0.6s ease-out;
     }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     .login-container::before {
       content: '';
       position: absolute;
@@ -46,7 +43,8 @@
       border-radius: 28px 28px 0 0;
     }
     .login-header { text-align: center; margin-bottom: 36px; }
-    .login-header .icon { font-size: 48px; color: #b48c46; display: inline-block; }
+    .login-header .icon { font-size: 48px; color: #b48c46; display: inline-block; animation: glowPulse 3s ease-in-out infinite; }
+    @keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 10px rgba(180, 140, 70, 0.2)); } 50% { filter: drop-shadow(0 0 30px rgba(180, 140, 70, 0.4)); } }
     .login-header h1 {
       font-family: 'Oswald', sans-serif;
       font-size: 34px;
@@ -56,14 +54,7 @@
       color: #e8d5b5;
       margin-top: 8px;
     }
-    .login-header .subtitle {
-      color: #8a7a5a;
-      margin-top: 4px;
-      font-size: 14px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      font-weight: 300;
-    }
+    .login-header .subtitle { color: #8a7a5a; margin-top: 4px; font-size: 14px; letter-spacing: 4px; text-transform: uppercase; font-weight: 300; }
     .login-form { display: flex; flex-direction: column; gap: 16px; }
     .login-form .input-group { position: relative; }
     .login-form .input-group i {
@@ -97,7 +88,6 @@
     .login-form select:focus + i,
     .login-form input:focus + i { color: #b48c46; }
     .login-form select option { background: #161616; color: #d4c4a4; }
-    
     .remember-me {
       display: flex;
       align-items: center;
@@ -106,14 +96,8 @@
       font-size: 14px;
       margin-top: -8px;
     }
-    .remember-me input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #b48c46;
-      cursor: pointer;
-    }
+    .remember-me input[type="checkbox"] { width: 18px; height: 18px; accent-color: #b48c46; cursor: pointer; }
     .remember-me label { cursor: pointer; }
-    
     .login-btn {
       padding: 16px;
       background: linear-gradient(135deg, #b48c46, #9a7a3a);
@@ -129,24 +113,10 @@
       font-family: 'Oswald', sans-serif;
       margin-top: 8px;
     }
-    .login-btn:hover {
-      background: linear-gradient(135deg, #c89c50, #a88840);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(180, 140, 70, 0.25);
-    }
+    .login-btn:hover { background: linear-gradient(135deg, #c89c50, #a88840); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(180, 140, 70, 0.25); }
     .login-btn:active { transform: scale(0.98); }
-    .register-link {
-      text-align: center;
-      margin-top: 22px;
-      color: #8a7a5a;
-      font-size: 14px;
-    }
-    .register-link a {
-      color: #b48c46;
-      text-decoration: none;
-      font-weight: 600;
-      transition: 0.3s;
-    }
+    .register-link { text-align: center; margin-top: 22px; color: #8a7a5a; font-size: 14px; }
+    .register-link a { color: #b48c46; text-decoration: none; font-weight: 600; transition: 0.3s; }
     .register-link a:hover { color: #c89c50; }
     .toast {
       position: fixed;
@@ -164,10 +134,7 @@
     .toast.success { background: #2d7d46; }
     .toast.error { background: #b33838; }
     .toast.info { background: #b48c46; }
-    @keyframes slideIn {
-      from { transform: translateX(100px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
+    @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     @media (max-width: 480px) {
       .login-container { padding: 28px 20px; }
       .login-header h1 { font-size: 28px; }
@@ -214,7 +181,6 @@
 </div>
 
 <script>
-  // ===== UPDATE THIS FOR DEPLOYMENT =====
   const API_URL = 'https://lion-muscles-gym-management-system.onrender.com/api';
 
   function showToast(message, type = 'info') {
@@ -225,19 +191,15 @@
     setTimeout(() => toast.remove(), 4000);
   }
 
-  // ===== LOAD SAVED CREDENTIALS =====
   window.onload = function() {
     const savedUsername = localStorage.getItem('rememberedUsername');
     const savedPassword = localStorage.getItem('rememberedPassword');
     const savedRole = localStorage.getItem('rememberedRole');
-    
     if (savedUsername && savedPassword) {
       document.getElementById('usernameInput').value = savedUsername;
       document.getElementById('passwordInput').value = savedPassword;
       document.getElementById('rememberMe').checked = true;
-      if (savedRole) {
-        document.getElementById('roleSelect').value = savedRole;
-      }
+      if (savedRole) document.getElementById('roleSelect').value = savedRole;
     }
   }
 
@@ -277,7 +239,6 @@
         }
         
         showToast(data.message, 'success');
-        
         setTimeout(() => {
           if (data.role === 'manager') {
             window.location.href = 'manager-dashboard.html';

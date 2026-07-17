@@ -29,10 +29,7 @@
       animation: slideUp 0.6s ease-out;
       position: relative;
     }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
     .app::before {
       content: '';
       position: absolute;
@@ -64,7 +61,8 @@
       align-items: center;
       gap: 12px;
     }
-    .header h1 i { color: #b48c46; font-size: 28px; }
+    .header h1 i { color: #b48c46; font-size: 28px; animation: glowPulse 3s ease-in-out infinite; }
+    @keyframes glowPulse { 0%, 100% { filter: drop-shadow(0 0 10px rgba(180, 140, 70, 0.2)); } 50% { filter: drop-shadow(0 0 30px rgba(180, 140, 70, 0.4)); } }
     .header-actions { display: flex; gap: 12px; align-items: center; }
     .role-badge {
       padding: 6px 18px;
@@ -91,11 +89,7 @@
       transition: 0.3s;
       font-size: 13px;
     }
-    .logout-btn:hover {
-      background: rgba(180, 30, 30, 0.08);
-      border-color: #b33838;
-      color: #b33838;
-    }
+    .logout-btn:hover { background: rgba(180, 30, 30, 0.08); border-color: #b33838; color: #b33838; }
     .member-dash {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -149,36 +143,12 @@
       letter-spacing: 0.5px;
       display: inline-block;
     }
-    .badge.paid {
-      background: rgba(45, 125, 70, 0.15);
-      color: #4caf84;
-      border: 1px solid rgba(45, 125, 70, 0.15);
-    }
-    .badge.pending {
-      background: rgba(200, 160, 50, 0.12);
-      color: #c8a032;
-      border: 1px solid rgba(200, 160, 50, 0.12);
-    }
-    .badge.overdue {
-      background: rgba(180, 30, 30, 0.12);
-      color: #b33838;
-      border: 1px solid rgba(180, 30, 30, 0.12);
-      animation: pulse 1.5s ease-in-out infinite;
-    }
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
-    }
-    .badge.monthly {
-      background: rgba(180, 140, 70, 0.12);
-      color: #b48c46;
-      border: 1px solid rgba(180, 140, 70, 0.12);
-    }
-    .badge.yearly {
-      background: rgba(200, 160, 50, 0.12);
-      color: #c8a032;
-      border: 1px solid rgba(200, 160, 50, 0.12);
-    }
+    .badge.paid { background: rgba(45, 125, 70, 0.15); color: #4caf84; border: 1px solid rgba(45, 125, 70, 0.15); }
+    .badge.pending { background: rgba(200, 160, 50, 0.12); color: #c8a032; border: 1px solid rgba(200, 160, 50, 0.12); }
+    .badge.overdue { background: rgba(180, 30, 30, 0.12); color: #b33838; border: 1px solid rgba(180, 30, 30, 0.12); animation: pulse 1.5s ease-in-out infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+    .badge.monthly { background: rgba(180, 140, 70, 0.12); color: #b48c46; border: 1px solid rgba(180, 140, 70, 0.12); }
+    .badge.yearly { background: rgba(200, 160, 50, 0.12); color: #c8a032; border: 1px solid rgba(200, 160, 50, 0.12); }
     .toast {
       position: fixed;
       bottom: 30px;
@@ -195,22 +165,9 @@
     .toast.success { background: #2d7d46; }
     .toast.error { background: #b33838; }
     .toast.info { background: #b48c46; }
-    @keyframes slideIn {
-      from { transform: translateX(100px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
-    }
-    .loading {
-      text-align: center;
-      color: #8a7a5a;
-      padding: 50px;
-      font-size: 16px;
-    }
-    .loading i {
-      font-size: 36px;
-      color: #b48c46;
-      display: block;
-      margin-bottom: 15px;
-    }
+    @keyframes slideIn { from { transform: translateX(100px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .loading { text-align: center; color: #8a7a5a; padding: 50px; font-size: 16px; }
+    .loading i { font-size: 36px; color: #b48c46; display: block; margin-bottom: 15px; }
     @media (max-width: 768px) {
       .app { padding: 16px; border-radius: 20px; }
       .header h1 { font-size: 20px; }
@@ -251,9 +208,8 @@
   const token = localStorage.getItem('token');
   const memberId = localStorage.getItem('memberId');
 
-  // ===== SESSION TIMEOUT - 30 MINUTES =====
+  // SESSION TIMEOUT - 30 MINUTES
   let inactivityTimer;
-
   function resetTimer() {
     clearTimeout(inactivityTimer);
     inactivityTimer = setTimeout(() => {
@@ -262,7 +218,6 @@
       window.location.href = 'index.html';
     }, 30 * 60 * 1000);
   }
-
   document.addEventListener('mousemove', resetTimer);
   document.addEventListener('keypress', resetTimer);
   document.addEventListener('click', resetTimer);
@@ -301,19 +256,10 @@
 
     try {
       const response = await fetch(`${API_URL}/members/${memberId}`, {
-        headers: { 
-          'Authorization': `Bearer ${token}`,
-          'X-Member-Id': memberId,
-          'Content-Type': 'application/json'
-        }
+        headers: { 'Authorization': `Bearer ${token}`, 'X-Member-Id': memberId, 'Content-Type': 'application/json' }
       });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
+      if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
       const member = await response.json();
-      
       const container = document.getElementById('memberInfo');
       container.innerHTML = `
         <div class="member-dash">
@@ -329,27 +275,15 @@
             <p><strong>Join Date</strong> ${member.joinDate ? new Date(member.joinDate).toLocaleDateString() : 'N/A'}</p>
             <p><strong>Last Payment</strong> ${member.lastPaymentDate ? new Date(member.lastPaymentDate).toLocaleDateString() : 'N/A'}</p>
             <p><strong>Next Payment</strong> ${member.nextPaymentDate ? new Date(member.nextPaymentDate).toLocaleDateString() : 'N/A'}</p>
-            <p><strong>Days Left</strong> 
-              ${member.daysLeft !== undefined ? 
-                (member.daysLeft < 0 ? 
-                  `<span style="color:#b33838; font-weight:700;">${Math.abs(member.daysLeft)} days overdue</span>` : 
-                  `<span style="color:#4caf84;">${member.daysLeft} days</span>`
-                ) : 'N/A'
-              }
-            </p>
-            <p><strong>Status</strong> <span class="badge ${member.isPaid ? 'paid' : (member.isOverdue ? 'overdue' : 'pending')}">
-              ${member.isPaid ? 'Paid' : (member.isOverdue ? 'Overdue' : 'Pending')}
-            </span></p>
+            <p><strong>Days Left</strong> ${member.daysLeft !== undefined ? (member.daysLeft < 0 ? `<span style="color:#b33838; font-weight:700;">${Math.abs(member.daysLeft)} days overdue</span>` : `<span style="color:#4caf84;">${member.daysLeft} days</span>`) : 'N/A'}</p>
+            <p><strong>Status</strong> <span class="badge ${member.isPaid ? 'paid' : (member.isOverdue ? 'overdue' : 'pending')}">${member.isPaid ? 'Paid' : (member.isOverdue ? 'Overdue' : 'Pending')}</span></p>
           </div>
           <div class="member-card">
             <h3><i class="fas fa-bell"></i> Notifications</h3>
             ${member.notifications && member.notifications.length > 0 ? 
               `<ul class="member-list">${member.notifications.slice().reverse().map(n => `
                 <li>
-                  <div>
-                    <div class="member-name">${n.message}</div>
-                    <div class="member-sub">${new Date(n.date).toLocaleDateString()} ${new Date(n.date).toLocaleTimeString()}</div>
-                  </div>
+                  <div><div class="member-name">${n.message}</div><div class="member-sub">${new Date(n.date).toLocaleDateString()} ${new Date(n.date).toLocaleTimeString()}</div></div>
                   <span class="badge ${n.read ? 'paid' : 'pending'}">${n.read ? 'Read' : 'New'}</span>
                 </li>
               `).join('')}</ul>` :
