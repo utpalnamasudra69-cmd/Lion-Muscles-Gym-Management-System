@@ -431,9 +431,29 @@
 </div>
 
 <script>
-  // ===== UPDATE THIS FOR DEPLOYMENT =====
- const API_URL = 'https://lion-muscles-gym-management-system.onrender.com/api';
+  const API_URL = 'https://lion-muscles-gym-management-system.onrender.com/api';
   let token = localStorage.getItem('token');
+
+  // ===== SESSION TIMEOUT - 30 MINUTES =====
+  let inactivityTimer;
+
+  function resetTimer() {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = setTimeout(() => {
+      alert('Session expired due to inactivity. Please login again.');
+      localStorage.clear();
+      window.location.href = 'index.html';
+    }, 30 * 60 * 1000); // 30 minutes
+  }
+
+  // Reset timer on user activity
+  document.addEventListener('mousemove', resetTimer);
+  document.addEventListener('keypress', resetTimer);
+  document.addEventListener('click', resetTimer);
+  document.addEventListener('scroll', resetTimer);
+
+  // Start timer
+  resetTimer();
 
   if (!token || localStorage.getItem('role') !== 'manager') {
     window.location.href = 'index.html';
@@ -633,7 +653,6 @@
     }
   }
 
-  // ===== DELETE MEMBER FUNCTION =====
   async function deleteMember(memberId) {
     if (!confirm('⚠️ Are you sure you want to delete this member? This action cannot be undone!')) {
       return;

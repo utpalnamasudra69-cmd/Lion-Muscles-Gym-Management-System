@@ -97,6 +97,23 @@
     .login-form select:focus + i,
     .login-form input:focus + i { color: #b48c46; }
     .login-form select option { background: #161616; color: #d4c4a4; }
+    
+    .remember-me {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #8a7a5a;
+      font-size: 14px;
+      margin-top: -8px;
+    }
+    .remember-me input[type="checkbox"] {
+      width: 18px;
+      height: 18px;
+      accent-color: #b48c46;
+      cursor: pointer;
+    }
+    .remember-me label { cursor: pointer; }
+    
     .login-btn {
       padding: 16px;
       background: linear-gradient(135deg, #b48c46, #9a7a3a);
@@ -176,11 +193,15 @@
     </div>
     <div class="input-group">
       <i class="fas fa-user"></i>
-      <input type="text" id="usernameInput" placeholder="Username" value="manager" />
+      <input type="text" id="usernameInput" placeholder="Username" />
     </div>
     <div class="input-group">
       <i class="fas fa-lock"></i>
-      <input type="password" id="passwordInput" placeholder="Password" value="manager123" />
+      <input type="password" id="passwordInput" placeholder="Password" />
+    </div>
+    <div class="remember-me">
+      <input type="checkbox" id="rememberMe" />
+      <label for="rememberMe">Remember me</label>
     </div>
     <button class="login-btn" onclick="login()">
       <i class="fas fa-sign-in-alt"></i> Login
@@ -194,9 +215,8 @@
 
 <script>
   // ===== UPDATE THIS FOR DEPLOYMENT =====
-  // For Local: http://localhost:5000/api
-  // For Render: https://your-backend.onrender.com/api
- const API_URL = 'https://lion-muscles-gym-management-system.onrender.com/api';
+  const API_URL = 'https://lion-muscles-gym-management-system.onrender.com/api';
+
   function showToast(message, type = 'info') {
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
@@ -205,10 +225,27 @@
     setTimeout(() => toast.remove(), 4000);
   }
 
+  // ===== LOAD SAVED CREDENTIALS =====
+  window.onload = function() {
+    const savedUsername = localStorage.getItem('rememberedUsername');
+    const savedPassword = localStorage.getItem('rememberedPassword');
+    const savedRole = localStorage.getItem('rememberedRole');
+    
+    if (savedUsername && savedPassword) {
+      document.getElementById('usernameInput').value = savedUsername;
+      document.getElementById('passwordInput').value = savedPassword;
+      document.getElementById('rememberMe').checked = true;
+      if (savedRole) {
+        document.getElementById('roleSelect').value = savedRole;
+      }
+    }
+  }
+
   async function login() {
     const role = document.getElementById('roleSelect').value;
     const username = document.getElementById('usernameInput').value.trim();
     const password = document.getElementById('passwordInput').value.trim();
+    const rememberMe = document.getElementById('rememberMe').checked;
 
     if (!username || !password) {
       showToast('Please enter username and password', 'error');
@@ -228,6 +265,16 @@
         localStorage.setItem('role', data.role);
         localStorage.setItem('memberId', data.memberId || '');
         localStorage.setItem('managerId', data.managerId || '');
+        
+        if (rememberMe) {
+          localStorage.setItem('rememberedUsername', username);
+          localStorage.setItem('rememberedPassword', password);
+          localStorage.setItem('rememberedRole', role);
+        } else {
+          localStorage.removeItem('rememberedUsername');
+          localStorage.removeItem('rememberedPassword');
+          localStorage.removeItem('rememberedRole');
+        }
         
         showToast(data.message, 'success');
         
