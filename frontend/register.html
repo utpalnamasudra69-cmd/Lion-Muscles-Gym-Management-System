@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lion Muscles Gym - Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      background: #0f0f0f;
+      background-image: 
+        radial-gradient(ellipse at 30% 50%, rgba(180, 140, 70, 0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 70% 50%, rgba(180, 140, 70, 0.04) 0%, transparent 60%);
+    }
+    .register-container {
+      position: relative;
+      max-width: 500px;
+      width: 100%;
+      background: #161616;
+      border-radius: 28px;
+      border: 1px solid rgba(180, 140, 70, 0.2);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+      padding: 36px 32px;
+      animation: slideUp 0.6s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .register-container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, #b48c46, transparent);
+      border-radius: 28px 28px 0 0;
+    }
+    .register-header { text-align: center; margin-bottom: 28px; }
+    .register-header .icon { font-size: 40px; color: #b48c46; display: inline-block; }
+    .register-header h1 {
+      font-family: 'Oswald', sans-serif;
+      font-size: 30px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #e8d5b5;
+      margin-top: 6px;
+    }
+    .register-header p {
+      color: #8a7a5a;
+      margin-top: 4px;
+      font-size: 14px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+    .register-form { display: flex; flex-direction: column; gap: 12px; }
+    .register-form .input-group { position: relative; }
+    .register-form .input-group i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #5a4a2a;
+      font-size: 16px;
+      transition: 0.3s;
+    }
+    .register-form input,
+    .register-form select {
+      width: 100%;
+      padding: 13px 18px 13px 46px;
+      border: 1px solid #2a2218;
+      border-radius: 50px;
+      font-size: 14px;
+      background: #0f0f0f;
+      color: #d4c4a4;
+      transition: 0.3s;
+      font-family: 'Inter', sans-serif;
+    }
+    .register-form input:focus,
+    .register-form select:focus {
+      outline: none;
+      border-color: #b48c46;
+      background: #141414;
+      box-shadow: 0 0 0 3px rgba(180, 140, 70, 0.08);
+    }
+    .register-form input:focus + i,
+    .register-form select:focus + i { color: #b48c46; }
+    .register-form input::placeholder { color: #5a4a2a; }
+    .register-form select option { background: #161616; color: #d4c4a4; }
+    .register-form .row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .register-btn {
+      padding: 15px;
+      background: linear-gradient(135deg, #b48c46, #9a7a3a);
+      border: none;
+      border-radius: 50px;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      font-family: 'Oswald', sans-serif;
+      margin-top: 6px;
+    }
+    .register-btn:hover {
+      background: linear-gradient(135deg, #c89c50, #a88840);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(180, 140, 70, 0.25);
+    }
+    .login-link {
+      text-align: center;
+      margin-top: 18px;
+      color: #8a7a5a;
+      font-size: 14px;
+    }
+    .login-link a {
+      color: #b48c46;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .login-link a:hover { color: #c89c50; }
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      padding: 14px 26px;
+      border-radius: 50px;
+      color: #ffffff;
+      font-weight: 600;
+      z-index: 1000;
+      animation: slideIn 0.4s ease-out;
+      font-size: 14px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+    }
+    .toast.success { background: #2d7d46; }
+    .toast.error { background: #b33838; }
+    .toast.info { background: #b48c46; }
+    @keyframes slideIn {
+      from { transform: translateX(100px); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+    @media (max-width: 480px) {
+      .register-container { padding: 24px 16px; }
+      .register-form .row { grid-template-columns: 1fr; }
+      .register-header h1 { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="register-container">
+  <div class="register-header">
+    <div class="icon"><i class="fas fa-user-plus"></i></div>
+    <h1>Join Lion Muscles</h1>
+    <p>Become a Member</p>
+  </div>
+
+  <div class="register-form">
+    <div class="row">
+      <div class="input-group">
+        <i class="fas fa-user"></i>
+        <input type="text" id="regUsername" placeholder="Username *" />
+      </div>
+      <div class="input-group">
+        <i class="fas fa-lock"></i>
+        <input type="password" id="regPassword" placeholder="Password *" />
+      </div>
+    </div>
+    <div class="input-group">
+      <i class="fas fa-user-circle"></i>
+      <input type="text" id="regName" placeholder="Full Name *" />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-envelope"></i>
+      <input type="email" id="regEmail" placeholder="Email Address *" />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-phone"></i>
+      <input type="tel" id="regPhone" placeholder="Phone Number *" />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-map-marker-alt"></i>
+      <input type="text" id="regAddress" placeholder="Address *" />
+    </div>
+    <div class="input-group">
+      <i class="fas fa-calendar-alt"></i>
+      <select id="regSubscription">
+        <option value="monthly">Monthly - $50</option>
+        <option value="yearly">Yearly - $500</option>
+      </select>
+    </div>
+    <button class="register-btn" onclick="registerMember()">
+      <i class="fas fa-check"></i> Register
+    </button>
+  </div>
+
+  <div class="login-link">
+    Already a member? <a href="index.html">Login Here</a>
+  </div>
+</div>
+
+<script>
+  const API_URL = 'http://localhost:5000/api';
+
+  function showToast(message, type = 'info') {
+    const toast = document.createElement('div');
+    toast.className = `toast ${type}`;
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 4000);
+  }
+
+  async function registerMember() {
+    const username = document.getElementById('regUsername').value.trim();
+    const password = document.getElementById('regPassword').value.trim();
+    const name = document.getElementById('regName').value.trim();
+    const email = document.getElementById('regEmail').value.trim();
+    const phone = document.getElementById('regPhone').value.trim();
+    const address = document.getElementById('regAddress').value.trim();
+    const subscriptionType = document.getElementById('regSubscription').value;
+
+    if (!username || !password || !name || !email || !phone || !address) {
+      showToast('Please fill all fields', 'error');
+      return;
+    }
+
+    if (password.length < 4) {
+      showToast('Password must be at least 4 characters', 'error');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/members/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+          username, 
+          password, 
+          name, 
+          email, 
+          phone, 
+          address, 
+          subscriptionType 
+        })
+      });
+      const data = await response.json();
+      
+      if (data.success) {
+        showToast('Registration successful! You can now login.', 'success');
+        setTimeout(() => {
+          window.location.href = 'index.html';
+        }, 2000);
+      } else {
+        showToast(data.error || 'Registration failed', 'error');
+      }
+    } catch (error) {
+      showToast('Server error. Make sure backend is running!', 'error');
+    }
+  }
+
+  document.getElementById('regAddress').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') registerMember();
+  });
+</script>
+</body>
+</html>
