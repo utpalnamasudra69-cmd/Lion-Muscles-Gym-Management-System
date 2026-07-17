@@ -1,0 +1,8 @@
+# Redirect root to homepage
+/ /home.html 200
+
+# Redirect login
+/login /login.html 200
+
+# Redirect register
+/register /register.html 200

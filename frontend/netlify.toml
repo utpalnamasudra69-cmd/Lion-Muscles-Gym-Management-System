@@ -1,0 +1,27 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/"
+  to = "/home.html"
+  status = 200
+
+[[redirects]]
+  from = "/login"
+  to = "/login.html"
+  status = 200
+
+[[redirects]]
+  from = "/register"
+  to = "/register.html"
+  status = 200
+
+[[redirects]]
+  from = "/manager-dashboard"
+  to = "/manager-dashboard.html"
+  status = 200
+
+[[redirects]]
+  from = "/member-dashboard"
+  to = "/member-dashboard.html"
+  status = 200
