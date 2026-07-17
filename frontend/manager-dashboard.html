@@ -443,16 +443,13 @@
       alert('Session expired due to inactivity. Please login again.');
       localStorage.clear();
       window.location.href = 'index.html';
-    }, 30 * 60 * 1000); // 30 minutes
+    }, 30 * 60 * 1000);
   }
 
-  // Reset timer on user activity
   document.addEventListener('mousemove', resetTimer);
   document.addEventListener('keypress', resetTimer);
   document.addEventListener('click', resetTimer);
   document.addEventListener('scroll', resetTimer);
-
-  // Start timer
   resetTimer();
 
   if (!token || localStorage.getItem('role') !== 'manager') {
@@ -531,6 +528,7 @@
           <strong style="color:#e8d5b5; font-size:14px;">${m.name}</strong>
           <span class="member-detail"><i class="fas fa-user"></i> ${m.username}</span>
           <span class="member-detail"><i class="fas fa-map-marker-alt"></i> ${m.address || 'N/A'}</span>
+          <span class="member-detail"><i class="fas fa-tag"></i> ${m.subscriptionType === 'monthly' ? '₹700/month' : '₹5,000/year'}</span>
         </td>
         <td>
           <span class="member-detail"><i class="fas fa-envelope"></i> ${m.email || 'N/A'}</span>
@@ -580,6 +578,7 @@
             <td>
               <strong style="color:#e8d5b5;">${m.name}</strong>
               <span class="member-detail"><i class="fas fa-user"></i> ${m.username}</span>
+              <span class="member-detail"><i class="fas fa-tag"></i> ${m.subscriptionType === 'monthly' ? '₹700/month' : '₹5,000/year'}</span>
             </td>
             <td>
               <span class="member-detail"><i class="fas fa-envelope"></i> ${m.email}</span>

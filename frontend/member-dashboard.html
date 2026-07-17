@@ -260,16 +260,13 @@
       alert('Session expired due to inactivity. Please login again.');
       localStorage.clear();
       window.location.href = 'index.html';
-    }, 30 * 60 * 1000); // 30 minutes
+    }, 30 * 60 * 1000);
   }
 
-  // Reset timer on user activity
   document.addEventListener('mousemove', resetTimer);
   document.addEventListener('keypress', resetTimer);
   document.addEventListener('click', resetTimer);
   document.addEventListener('scroll', resetTimer);
-
-  // Start timer
   resetTimer();
 
   if (!token || localStorage.getItem('role') !== 'member') {
@@ -328,6 +325,7 @@
             <p><strong>Phone</strong> ${member.phone || 'N/A'}</p>
             <p><strong>Address</strong> ${member.address || 'N/A'}</p>
             <p><strong>Subscription</strong> <span class="badge ${member.subscriptionType}">${member.subscriptionType || 'N/A'}</span></p>
+            <p><strong>Fee</strong> ${member.subscriptionType === 'monthly' ? '₹700 / month' : '₹5,000 / year'}</p>
             <p><strong>Join Date</strong> ${member.joinDate ? new Date(member.joinDate).toLocaleDateString() : 'N/A'}</p>
             <p><strong>Last Payment</strong> ${member.lastPaymentDate ? new Date(member.lastPaymentDate).toLocaleDateString() : 'N/A'}</p>
             <p><strong>Next Payment</strong> ${member.nextPaymentDate ? new Date(member.nextPaymentDate).toLocaleDateString() : 'N/A'}</p>
